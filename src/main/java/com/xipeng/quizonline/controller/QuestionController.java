@@ -4,11 +4,13 @@ import com.xipeng.quizonline.model.Question;
 import com.xipeng.quizonline.service.IQuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED; // HTTP 状态码 201
 
@@ -50,5 +52,22 @@ public class QuestionController {
     public ResponseEntity<List<Question>> getAllQuestions() {
         List<Question> questions = questionService.getAllQuestions();
         return ResponseEntity.ok(questions);
+    }
+
+    /**
+     * 将 HTTP GET 请求映射到“/question/{id}”端点，用于根据 ID 获取特定的问题。
+     *
+     * @param id 要获取的问题的 ID。
+     * @return 返回包含问题的响应实体，状态码为 200 (OK)。
+     * @throws ChangeSetPersister.NotFoundException 如果指定 ID 的问题不存在。
+     */
+    @GetMapping("/question/{id}")
+    public ResponseEntity<Question> getQuestionById(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+        Optional<Question> question = questionService.getQuestionById(id);
+        if (question.isPresent()) {
+            return ResponseEntity.ok(question.get());
+        } else {
+            throw new ChangeSetPersister.NotFoundException();
+        }
     }
 }
