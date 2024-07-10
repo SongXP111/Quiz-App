@@ -6,6 +6,9 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * IQuestionService 接口定义了与问题相关的服务方法。
+ */
 public interface IQuestionService {
 
     Question createQuestion(Question question);
