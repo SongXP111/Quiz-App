@@ -1,1 +1,1 @@
-# Quiz-App
+# Backend for quiz app
