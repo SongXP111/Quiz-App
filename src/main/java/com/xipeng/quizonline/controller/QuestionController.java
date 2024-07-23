@@ -83,7 +83,7 @@ public class QuestionController {
      *
      * @PutMapping 将 HTTP PUT 请求映射到“/{id}/update”端点，用于更新特定的问题。
      */
-    @PutMapping("/{id}/update")
+    @PutMapping("/question/{id}/update")
     public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody Question question) throws ChangeSetPersister.NotFoundException {
         Question updatedQuestion = questionService.updateQuestion(id, question);
         return ResponseEntity.ok(updatedQuestion);
@@ -98,7 +98,7 @@ public class QuestionController {
      * @DeleteMapping 将 HTTP DELETE 请求映射到“/{id}/delete”端点，用于删除特定的问题。
      */
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/question/{id}/delete")
     public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
         questionService.deleteQuestion(id);
         return ResponseEntity.noContent().build();
@@ -124,7 +124,7 @@ public class QuestionController {
      *
      * @RequestParam 用于将请求参数绑定到方法参数上
      */
-    @GetMapping("/fetch-question-for-user")
+    @GetMapping("/quiz/fetch-question-for-user")
     public ResponseEntity<List<Question>> getQuestionsForUser(
             @RequestParam Integer numOfQuestions, @RequestParam String subject) {
         List<Question> allQuestions = questionService.getQuestionsForUser(numOfQuestions, subject);
